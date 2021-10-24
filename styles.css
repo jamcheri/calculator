@@ -1,0 +1,28 @@
+* {
+    border: 1px solid blue;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#display {
+    height: 20px;
+    width: 100px;
+}
+
+#container {
+    display: flex;
+    height: 100px;
+}
+
+.digits {
+    min-height: 25px;
+    min-width: 32%;
+}
+
+#operators {
+    min-width: 
+}
