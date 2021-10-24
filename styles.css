@@ -1,28 +1,63 @@
 * {
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
+    background-color: black;
 }
 
 body {
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #display {
-    height: 20px;
-    width: 100px;
+    height: 120px;
+    width: 400px;
+    background-color: grey;
+    font-size: 30px;
 }
 
 #container {
     display: flex;
-    height: 100px;
+    height: 400px;
+    min-width: 400px;
+    border: 1px solid black;
+}
+
+#numInputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    gap: 0px;
 }
 
 .digits {
-    min-height: 25px;
-    min-width: 32%;
+    min-height: 100px;
+    min-width: 33.2%;
+    margin: 0px;
+    background-color: rgb(26, 26, 94);
+    color: rgba(255, 255, 255, 0.514);   
+    font-size: 25px;
+    font-weight: 10;
 }
 
-#operators {
-    min-width: 
+#zero {
+    min-width: 66.4%;
+}
+
+#calcInputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100px;
+    height: 400px;
+    flex-direction: column;
+}
+
+.operators {
+    min-width: 20%;
+    height: 80px;
+    background-color: rgb(72, 26, 72);
+    color: rgba(255, 255, 255, 0.514);
+    font-size: 25px;
+    font-weight: 10;
 }
