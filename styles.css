@@ -15,7 +15,27 @@ body {
     width: 400px;
     background-color: grey;
     font-size: 30px;
+    color: black;
+    text-align: right;
+    display: table-cell;
+    vertical-align: bottom;
 }
+
+#edit {
+    
+    width: 400px;
+    display: flex;
+}
+
+.editors {
+    height: 80px;
+    min-width: 50%;
+    background-color: rgb(70, 44, 189);
+    font-size: 25px;
+    margin: 0px;
+    color: rgba(255, 255, 255, 0.514);  
+}
+
 
 #container {
     display: flex;
@@ -33,7 +53,7 @@ body {
 
 .digits {
     min-height: 100px;
-    min-width: 33.2%;
+    min-width: 33.3333%;
     margin: 0px;
     background-color: rgb(26, 26, 94);
     color: rgba(255, 255, 255, 0.514);   
@@ -42,7 +62,23 @@ body {
 }
 
 #zero {
+    min-height: 100px;
     min-width: 66.4%;
+    margin: 0px;
+    background-color: rgb(26, 26, 94);
+    color: rgba(255, 255, 255, 0.514);   
+    font-size: 25px;
+    font-weight: 10;
+}
+
+#period {
+    min-height: 100px;
+    min-width: 33.2%;
+    margin: 0px;
+    background-color: rgb(26, 26, 94);
+    color: rgba(255, 255, 255, 0.514);   
+    font-size: 25px;
+    font-weight: 10;
 }
 
 #calcInputs {
@@ -54,6 +90,15 @@ body {
 }
 
 .operators {
+    min-width: 20%;
+    height: 80px;
+    background-color: rgb(72, 26, 72);
+    color: rgba(255, 255, 255, 0.514);
+    font-size: 25px;
+    font-weight: 10;
+}
+
+#equals {
     min-width: 20%;
     height: 80px;
     background-color: rgb(72, 26, 72);

@@ -21,8 +21,138 @@ function divide(numOne, numTwo) {
 
 
 
-let operator = "";
-let operatedCycle = false;
+
+//stages that need to be available
+let operatedCycle = false;  // keeps track of if we're in the middle of a operation
+let storedValueOne = "0";
+let storedValueTwo = "0";
+let currentOperator = "";   // keeps track of what the currently used operator is
+
+
+if (storedValueOne === "") {
+    storedValueOne = "0"
+    document.getElementById("display").innerHTML = storedValueOne;
+}
+
+
+//functions that explain all the different actions
+function digit(id) {
+    console.log(id);
+    console.log(storedValueOne);
+
+    if (storedValueOne === "0") {
+        storedValueOne = id;
+    }
+    else {
+        storedValueOne += id;
+    }
+
+    document.getElementById("display").innerHTML = storedValueOne; // make display show result
+};
+
+function zero() {
+    // if value is currently blank continue displaying zero
+    if (storedValueOne === "0") {
+        console.log(storedValueOne);
+        storedValueOne = "0";
+        document.getElementById("display").innerHTML = storedValueOne;
+    }
+    //if there is no period and the first value is still zero
+    //else if (storedValueOne.includes(".") && storedValueOne.charAt(0) === "0") {   
+      //console.log(storedValueOne);
+        //document.getElementById("display").innerHTML = storedValueOne;
+    //} 
+    else {
+        storedValueOne += "0";
+        document.getElementById("display").innerHTML = storedValueOne;
+    };
+};
+
+function period() {
+    // check if they're trying to enter a period and the storedValueOne already includes a period 
+    if (storedValueOne.includes(".")) {   
+        console.log(storedValueOne);
+    }
+    else if (storedValueOne === "") {
+        storedValueOne = "0."
+    }
+    else {
+        storedValueOne += ".";
+    }
+    document.getElementById("display").innerHTML = storedValueOne;
+};
+
+function clear() {
+    console.log("clear");
+    storedValueOne = "0";
+    document.getElementById("display").innerHTML = storedValueOne;
+};
+
+function backspace () {
+    console.log("backspace");
+    if (storedValueOne === "0") {
+        console.log(storedValueOne);
+    }
+    else if (storedValueOne.length === 1) {
+        storedValueOne = "0";
+    }
+    else {
+        storedValueOne = storedValueOne.substring(0, storedValueOne.length - 1);
+    }    
+    
+    document.getElementById("display").innerHTML = storedValueOne   
+}
+
+function operate() {
+    console.log("operate");
+}
+
+function equals() {
+    console.log("equals");
+};
+
+
+//set up buttons
+const digitButton = document.querySelectorAll(".digits");
+digitButton.forEach(button => button.addEventListener("click", 
+    function() {
+    digit(button.textContent);
+    }
+));
+
+const zeroButton = document.querySelector("#zero");
+zeroButton.addEventListener("click", zero);
+
+const periodButton = document.querySelector("#period");
+periodButton.addEventListener("click", period);
+
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", clear);
+
+const backspaceButton = document.querySelector("#backspace");
+backspaceButton.addEventListener("click", backspace);
+
+const operateButton = document.querySelector(".operators");
+operateButton.addEventListener("click", operate);
+
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("click", equals);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 
 
 //operate function that takes in the userInput and performs the calculation
@@ -205,10 +335,10 @@ button.addEventListener('click', () => {
 
 
 
-const power = function(num, toPower) {
+function power(num, toPower) {
     let powered = num ** toPower;
     return powered;
-};
+}
 
 const factorial = function(num) {
     var result = num;
