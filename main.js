@@ -1,22 +1,97 @@
 //math functions
-function add(numOne, numTwo) {
-    let added = numOne + numTwo;
-    return added;
+function add(numOne, numTwo, nextOperatorDisplay) {
+    console.log("add");
+    let added = parseFloat(numTwo) + parseFloat(numOne);
+    added = Math.round((added + Number.EPSILON) * 100) / 100;   // round to two decimals
+
+    if (nextOperatorDisplay === "=") {
+        storedValueTwo = "=";
+        storedValueOne = added;
+        thisOperator = "add";   // here is what I changed from "" to add
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+        //nextOperatorDisplay = "+";
+        console.log("bird");
+        operatedCycle = false;
+        lastOperatorDisplay = "=";
+    } 
+    else {
+        storedValueTwo = added + " " + nextOperatorDisplay;
+        storedValueOne = "0";
+        console.log("here");
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+    }    
 };
 
-function subtract(numOne, numTwo) {
-    let subtracted = numOne - numTwo;
-    return subtracted;
+function subtract(numOne, numTwo, nextOperatorDisplay) {
+    console.log("subtract");
+    let subtracted = parseFloat(numTwo) - parseFloat(numOne);
+    subtracted = Math.round((subtracted + Number.EPSILON) * 100) / 100;   // round to two decimals
+
+    if (nextOperatorDisplay === "=") {
+        storedValueTwo = "=";
+        storedValueOne = subtracted;
+        thisOperator = "subtract";   // here is what I changed from "" to add
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+        console.log("sparrow");
+        operatedCycle = false;
+        lastOperatorDisplay = "=";
+    } 
+    else {
+        storedValueTwo = subtracted + " " + nextOperatorDisplay;
+        storedValueOne = "0"
+        console.log("heresubtract");
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;   
+    }
 };
 
-function multiply(numOne, numTwo) {
-    let multiplied = numOne * numTwo;
-    return multiplied;
+function multiply(numOne, numTwo, nextOperatorDisplay) {
+    console.log("multiply");
+    let multiplied = parseFloat(numTwo) * parseFloat(numOne);
+    multiplied = Math.round((multiplied + Number.EPSILON) * 100) / 100;   // round to two decimals
+
+    if (nextOperatorDisplay === "=") {
+        storedValueTwo = "=";
+        storedValueOne = multiplied;
+        thisOperator = "multiply";   // here is what I changed from "" to add
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+        console.log("parrot");
+        operatedCycle = false;
+        lastOperatorDisplay = "=";
+    } 
+    else {
+        storedValueTwo = multiplied + " " + nextOperatorDisplay;
+        storedValueOne = "0";
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+    }
 };
 
-function divide(numOne, numTwo) {
-    let divided = numOne / numTwo;
-    return divided;
+function divide(numOne, numTwo, nextOperatorDisplay) {
+    console.log("divide");
+    let divided = parseFloat(numTwo) / parseFloat(numOne);
+    divided = Math.round((divided + Number.EPSILON) * 100) / 100;   // round to two decimals
+    
+    if (nextOperatorDisplay === "=") {
+        storedValueTwo = "=";
+        storedValueOne = divided;
+        thisOperator = "divide";   // here is what I changed from "" to add
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+        console.log("jackal");
+        operatedCycle = false;
+        lastOperatorDisplay = "=";
+    } 
+    else {
+        storedValueTwo = divided + " " + nextOperatorDisplay;
+        storedValueOne = "0";
+        document.getElementById("displayOne").innerHTML = storedValueOne;
+        document.getElementById("displayTwo").innerHTML = storedValueTwo;
+    }
 };
 
 
@@ -25,13 +100,18 @@ function divide(numOne, numTwo) {
 //stages that need to be available
 let operatedCycle = false;  // keeps track of if we're in the middle of a operation
 let storedValueOne = "0";
-let storedValueTwo = "0";
-let currentOperator = "";   // keeps track of what the currently used operator is
+let storedValueTwo = "";
+let operator = "";   // keeps track of what the currently used operator is
+let thisOperator = "";
+let nextOperator = "";
+let nextOperatorDisplay = "";
+let lastOperatorDisplay = "";
 
 
+// just a failsafe for when they delete the original stored zero or subsequent numbers
 if (storedValueOne === "") {
     storedValueOne = "0"
-    document.getElementById("display").innerHTML = storedValueOne;
+    document.getElementById("displayOne").innerHTML = storedValueOne;
 }
 
 
@@ -40,14 +120,20 @@ function digit(id) {
     console.log(id);
     console.log(storedValueOne);
 
-    if (storedValueOne === "0") {
+    //storedValueOne !== "0" && 
+    if (nextOperatorDisplay === "=") {
+        clear();
+        storedValueOne = id;
+    }
+    else if (storedValueOne === "0") {
         storedValueOne = id;
     }
     else {
         storedValueOne += id;
     }
 
-    document.getElementById("display").innerHTML = storedValueOne; // make display show result
+    document.getElementById("displayOne").innerHTML = storedValueOne; // make display show result
+    document.getElementById("displayTwo").innerHTML = storedValueTwo;
 };
 
 function zero() {
@@ -55,7 +141,7 @@ function zero() {
     if (storedValueOne === "0") {
         console.log(storedValueOne);
         storedValueOne = "0";
-        document.getElementById("display").innerHTML = storedValueOne;
+        document.getElementById("displayOne").innerHTML = storedValueOne;
     }
     //if there is no period and the first value is still zero
     //else if (storedValueOne.includes(".") && storedValueOne.charAt(0) === "0") {   
@@ -64,7 +150,7 @@ function zero() {
     //} 
     else {
         storedValueOne += "0";
-        document.getElementById("display").innerHTML = storedValueOne;
+        document.getElementById("displayOne").innerHTML = storedValueOne;
     };
 };
 
@@ -79,17 +165,27 @@ function period() {
     else {
         storedValueOne += ".";
     }
-    document.getElementById("display").innerHTML = storedValueOne;
+    document.getElementById("displayOne").innerHTML = storedValueOne;
 };
 
 function clear() {
     console.log("clear");
     storedValueOne = "0";
-    document.getElementById("display").innerHTML = storedValueOne;
+    storedValueTwo = "";
+    operator = "";
+    thisOperator = "";
+    nextOperator = "";
+    lastOperatorDisplay = "";
+    nextOperatorDisplay = "";
+    operatedCycle = false;
+    document.getElementById("displayOne").innerHTML = storedValueOne;
+    document.getElementById("displayTwo").innerHTML = "";
+
 };
 
 function backspace () {
     console.log("backspace");
+    console.log("SV1 is " + storedValueOne);
     if (storedValueOne === "0") {
         console.log(storedValueOne);
     }
@@ -100,19 +196,79 @@ function backspace () {
         storedValueOne = storedValueOne.substring(0, storedValueOne.length - 1);
     }    
     
-    document.getElementById("display").innerHTML = storedValueOne   
+    document.getElementById("displayOne").innerHTML = storedValueOne   
 }
 
-function operate() {
-    console.log("operate");
+function operateDisplay (operatorDisplay, operator) {  
+    if (operatedCycle === false) {
+        storedValueTwo = storedValueOne + " " + operatorDisplay;
+        storedValueOne = "0";  
+        console.log(storedValueOne);
+        console.log(storedValueTwo);
+        console.log("croc");
+        operatedCycle = true;
+        thisOperator = operator;
+    } 
+    else if (storedValueOne !== "0" && lastOperatorDisplay === "=") {
+        console.log("cat");
+        storedValueTwo = storedValueOne + " " + operatorDisplay;
+        storedValueOne = "0";
+        nextOperatorDisplay = operatorDisplay;
+        lastOperatorDisplay = operatorDisplay;
+        //this is a test
+        thisOperator = operator;
+        //window[thisOperator](storedValueOne, storedValueTwo, nextOperatorDisplay);
+    }
+    else if (storedValueOne !== "0") {
+        console.log("dog");
+        nextOperator = operator;
+        nextOperatorDisplay = operatorDisplay;
+        console.log(storedValueOne);
+        console.log(storedValueTwo);
+        console.log(thisOperator);
+        console.log(nextOperator);
+        window[thisOperator](storedValueOne, storedValueTwo, nextOperatorDisplay);
+        nextOperator = "";
+        thisOperator = operator;
+    }
+    else {
+        console.log("ferret");
+        console.log(storedValueOne);
+        console.log(storedValueTwo);
+        thisOperator = operator;
+        storedValueTwo =  storedValueTwo.substring(0, storedValueTwo.length - 1) + " " + operatorDisplay;
+        console.log(operator)
+    }
+    document.getElementById("displayOne").innerHTML = storedValueOne;
+    document.getElementById("displayTwo").innerHTML = storedValueTwo; 
 }
 
-function equals() {
-    console.log("equals");
-};
-
+function equalsDisplay () {
+    if (operatedCycle === false) {
+        console.log("equalsButton");
+        ;
+    }
+    else if (thisOperator === "divide" && storedValueOne === "0") {
+        alert("error, dividing by zero");
+    }
+    else if (lastOperatorDisplay === "=") {
+        console.log("equalsButton2");
+        ;
+    }
+    else {
+        console.log("hello", storedValueOne, storedValueTwo, nextOperatorDisplay);
+        nextOperatorDisplay = "=";
+        window[thisOperator](storedValueOne, storedValueTwo, nextOperatorDisplay);
+        operatedCycle = true;
+    }
+    console.log(storedValueOne);
+    console.log(storedValueTwo);
+    console.log(thisOperator);
+    console.log(nextOperatorDisplay);
+}
 
 //set up buttons
+{
 const digitButton = document.querySelectorAll(".digits");
 digitButton.forEach(button => button.addEventListener("click", 
     function() {
@@ -132,266 +288,18 @@ clearButton.addEventListener("click", clear);
 const backspaceButton = document.querySelector("#backspace");
 backspaceButton.addEventListener("click", backspace);
 
-const operateButton = document.querySelector(".operators");
-operateButton.addEventListener("click", operate);
+const operateButton = document.querySelectorAll(".operators");
+operateButton.forEach(button => button.addEventListener("click", 
+    function() {
+    operateDisplay(button.textContent, button.id);
+    //operateMath(button.id);
+    }
+));
 
 const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("click", equals);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-//operate function that takes in the userInput and performs the calculation
-function operate(operator, numOne, numTwo) {
-    //let operator = userInput;
-    let operateResult = 0;
-
-    if (operator === "add") {
-        operateResult = add(numOne, numTwo);
-    } else if (operator === "subtract") {
-        operateResult = subtract(numOne, numTwo);
-    } else if (operator === "multiply") {
-        operateResult = multiply(numOne, numTwo);
-    } else if (operator === "divide") {
-        operateResult = divide(numOne, numTwo);
+equalsButton.addEventListener("click", 
+    function() {
+    equalsDisplay();
     }
-    document.getElementById("display").innerHTML=operateResult; //send code to display
-    console.log("operateResult is " + operateResult);
-    console.log("operatorClicked is " + operatorClicked);
-
-    operatedCycle = true;
-    numOne = operateResult;
-    numTwo = "";
-    value = "";
-    return operateResult;
-};
-
-//setup each digit button
-
-let value = "";
-let operatorClicked = false;
-
-
-
-
-const buttons = document.querySelectorAll("button");
-buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-        if (operatorClicked === false && operatedCycle === false) {
-            if (value.includes(".") && button.id === "period") {
-                console.log(value);
-            } else if (button.id === "zero" && value.charAt(0) === "0" && !value.includes(".")) {
-                console.log(value);
-            } else if (button.classList.contains("digits")) {
-                value = value.toString();
-                value += button.textContent;
-                console.log(value);
-            } else if (button.classList.contains("operators") && value === "") {
-                console.log(value);
-            } else if (value != "" && value != "." && button.id === "equals") {
-                console.log(value);
-                
-    
-            } else if (button.classList.contains("operators")) {
-                operatorClicked = true;
-                console.log(operatorClicked);
-                operator = button.id;
-                console.log(operator);
-                numOne = parseFloat(value);
-                console.log("numOne is " + numOne);
-                value = "";
-                return;
-            } else {
-                return;
-            }
-        }
-        
-        
-        
-        else if (operatedCycle === false) {
-            if (value.includes(".") && button.id === "period") {
-                console.log(value);
-            } else if (button.id === "zero" && value.charAt(0) === "0" && !value.includes(".")) {
-                console.log(value);
-            } else if (button.classList.contains("digits")) {
-                value = value.toString();
-                value += button.textContent;
-                console.log(value);
-            } else if (button.classList.contains("operators") && value === "") {
-                console.log(value);
-            } else if (value != "" && value != "." && button.id === "equals") {
-                console.log(value);
-                numTwo = parseFloat(value);
-                console.log("numOne is " + numOne);
-                console.log("numTwo is " + numTwo);
-                console.log("operator is " + operator);
-                return operate(operator, numOne, numTwo);
-            } else if (button.classList.contains("operators")) {
-                operatorClicked = true;
-                console.log(operatorClicked);
-                operator = button.id;
-                console.log(operator);
-                numTwo = parseFloat(value);
-                console.log(numOne);
-                value = "";
-                return;
-            } else {
-                return;
-            }
-        } 
-        
-        else { //this is 
-            console.log("value is " + value);
-            console.log("numOne is " + numOne);
-            console.log("numTwo is " + numTwo);
-            
-            if (value.includes(".") && button.id === "period") {
-                console.log(value);
-            } else if (button.id === "zero" && value.charAt(0) === "0" && !value.includes(".")) {
-                console.log(value);
-            } else if (button.classList.contains("digits")) {
-                value = value.toString();
-                value += button.textContent;
-                console.log(value);
-            } else if (button.classList.contains("operators") && value === "") {
-                console.log(value);
-            } else if (value != "" && value != "." && button.id === "equals") {
-                console.log(value);
-                numTwo = parseFloat(value); 
-            } else if (button.classList.contains("operators")) {
-                operatorClicked = true;
-                console.log(operatorClicked);
-                operator = button.id;
-                console.log(operator);
-                numTwo = parseFloat(value);
-                console.log(numOne);
-                value = "";
-                return;
-            }
-        };
-    
-     
-    });
-
-
-});
-
-
-
-
-
-
-//const digitButton = document.querySelectorAll(".digits");
-
-
-
-
-//each time digit is pressed, add to a string
-
-
-
-/*
-const button = document.querySelector("#button");       //button to reset 
-button.addEventListener('click', () => {
-    userInput = prompt("What dimensions should the new grid be? X number by X number:");
-
-    while (userInput > 100) {                           //don't let grid get larger than 100x100
-        userInput = prompt("Grid dimension cannot be larger than 100, please enter a lower dimension:")
-    }
-
-    makeGrid(userInput);
-});*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function power(num, toPower) {
-    let powered = num ** toPower;
-    return powered;
+);
 }
-
-const factorial = function(num) {
-    var result = num;
-    if (num === 0 || num === 1) 
-        return 1; 
-    while (num > 1) { 
-        num--;
-        result *= num;
-    }
-    return result;
-};
-
-
-
-
-
-
-
-
-
-
-
-/*
-function multiply(arrayToMultiply) {
-    let multiplied = 1;
-    let i = 0;
-
-    while (i<arrayToMultiply.length) {
-        multiplied = multiplied * arrayToMultiply[i];
-        i++;
-    }
-    return multiplied;
-};
-
-function divide(arrayToDivide) {
-    let divided = 1;
-    let i = 0;
-
-    while (i<arrayToDivide.length) {
-        divided = divided * arrayToDivide[i];
-        i++;
-    }
-    return divided;
-};*/
-
-/*
-const sum = function(arrayToSum) {
-    let summed = 0;
-    let i = 0;
-
-    while (i<arrayToSum.length) {
-        summed += arrayToSum[i];
-        i++;
-    }
-    return summed;
-};*/

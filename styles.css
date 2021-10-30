@@ -3,26 +3,63 @@
     background-color: black;
 }
 
+html {
+    height:100%;
+}
+
 body {
+    margin: 0px;
+    height: 100%;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    height: 100%;
+    background-image: url("space3.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover; 
+}
+
+#mainContainer {
     margin-top: 60px;
+    margin-bottom: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 600px;
 }
 
 #display {
     height: 120px;
     width: 400px;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: grey;
-    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#displayOne {
+    font-size: 35px;
+    background-color: grey;
     color: black;
-    text-align: right;
-    display: table-cell;
-    vertical-align: bottom;
+    padding-right: 5px;
+}
+
+#displayTwo {
+    font-size: 35px;
+    background-color: grey;
+    color: black;
+    padding-right: 5px;
 }
 
 #edit {
-    
+    margin: 0px;
+    border: 0px;
     width: 400px;
     display: flex;
 }
@@ -30,31 +67,27 @@ body {
 .editors {
     height: 80px;
     min-width: 50%;
-    background-color: rgb(70, 44, 189);
+    background-color: rgb(17, 16, 19);
     font-size: 25px;
     margin: 0px;
     color: rgba(255, 255, 255, 0.514);  
 }
 
-
 #container {
     display: flex;
     height: 400px;
     min-width: 400px;
-    border: 1px solid black;
 }
 
 #numInputs {
     display: flex;
     flex-wrap: wrap;
     width: 300px;
-    gap: 0px;
 }
 
 .digits {
     min-height: 100px;
     min-width: 33.3333%;
-    margin: 0px;
     background-color: rgb(26, 26, 94);
     color: rgba(255, 255, 255, 0.514);   
     font-size: 25px;
@@ -63,8 +96,7 @@ body {
 
 #zero {
     min-height: 100px;
-    min-width: 66.4%;
-    margin: 0px;
+    min-width: 66.66666%;
     background-color: rgb(26, 26, 94);
     color: rgba(255, 255, 255, 0.514);   
     font-size: 25px;
@@ -73,8 +105,7 @@ body {
 
 #period {
     min-height: 100px;
-    min-width: 33.2%;
-    margin: 0px;
+    min-width: 33.3333%;
     background-color: rgb(26, 26, 94);
     color: rgba(255, 255, 255, 0.514);   
     font-size: 25px;
@@ -105,4 +136,9 @@ body {
     color: rgba(255, 255, 255, 0.514);
     font-size: 25px;
     font-weight: 10;
+}
+
+button:hover { 
+    background-color: #3d286d !important;  
+    color: white !important;
 }
